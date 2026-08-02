@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_BASE_URL from '../config';
 
 export default function Auth({ setAuth, showToast }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +17,7 @@ export default function Auth({ setAuth, showToast }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/login', {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, password: loginPassword })
@@ -39,7 +40,7 @@ export default function Auth({ setAuth, showToast }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/register', {
+      const res = await fetch(`${API_BASE_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: regName, email: regEmail, password: regPassword, role: regRole })

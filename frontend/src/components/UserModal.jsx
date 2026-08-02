@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../config';
 
 export default function UserModal({ editUser, token, onClose, onSuccess, showToast }) {
   const [name, setName] = useState('');
@@ -37,7 +38,7 @@ export default function UserModal({ editUser, token, onClose, onSuccess, showToa
     const method = isEdit ? 'PUT' : 'POST';
 
     try {
-      const res = await fetch(url, {
+      const res = await fetch(`${API_BASE_URL}${url}`, {
         method,
         headers: {
           'Content-Type': 'application/json',

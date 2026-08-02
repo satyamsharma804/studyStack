@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL, { getImageUrl } from '../config';
 
 export default function Dashboard({ user, token, showToast, openCourseModal, openUserModal, activeTab, setActiveTab }) {
   const [courses, setCourses] = useState([]);
@@ -15,7 +16,7 @@ export default function Dashboard({ user, token, showToast, openCourseModal, ope
   const fetchCourses = async () => {
     setCoursesLoading(true);
     try {
-      const res = await fetch('/api/courses');
+      const res = await fetch(`${API_BASE_URL}/api/courses`);
       if (!res.ok) throw new Error('Failed to fetch courses');
       const data = await res.json();
       setCourses(data);
@@ -30,7 +31,7 @@ export default function Dashboard({ user, token, showToast, openCourseModal, ope
     if (!isInstructor) return;
     setUsersLoading(true);
     try {
-      const res = await fetch('/api/users', {
+      const res = await fetch(`${API_BASE_URL}/api/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!res.ok) throw new Error('Failed to fetch users');
@@ -53,7 +54,7 @@ export default function Dashboard({ user, token, showToast, openCourseModal, ope
   const handleDeleteCourse = async (id) => {
     if (!confirm('Are you sure you want to delete this course?')) return;
     try {
-      const res = await fetch(`/api/courses/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/courses/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -68,7 +69,7 @@ export default function Dashboard({ user, token, showToast, openCourseModal, ope
   const handleDeleteUser = async (id) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     try {
-      const res = await fetch(`/api/users/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/users/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -206,7 +207,7 @@ export default function Dashboard({ user, token, showToast, openCourseModal, ope
                     {/* Course Background Image Banner */}
                     <div 
                       className="h-[140px] bg-cover bg-center bg-no-repeat bg-slate-100 dark:bg-slate-800 border-b border-slate-200/50 dark:border-slate-800/50"
-                      style={{ backgroundImage: `url('${course.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop'}')` }}
+                      style={{ backgroundImage: `url('${getImageUrl(course.image)}')` }}
                     ></div>
 
                     {/* Details Body */}
