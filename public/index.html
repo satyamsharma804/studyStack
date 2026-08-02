@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyStack - Elevate Your Learning</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Study<span>Stack</span></span>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <i class="fa-regular fa-sun sun-icon"></i>
+          <i class="fa-regular fa-moon moon-icon"></i>
+        </button>
+        <nav class="header-nav" id="headerNav" style="display: none;">
+          <span class="user-badge" id="userBadge">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="userName">User</span>
+            <span class="role-pill" id="userRole">Student</span>
+          </span>
+          <button id="logoutBtn" class="btn btn-secondary">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- AUTH SECTION -->
+    <section id="authSection" class="auth-section">
+      <div class="auth-card">
+        <!-- Login Card -->
+        <div id="loginFormContainer">
+          <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Access your courses and stack up your knowledge</p>
+          </div>
+          <form id="loginForm" class="auth-form">
+            <div class="form-group">
+              <label for="loginEmail">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="loginEmail" placeholder="you@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="loginPassword" placeholder="••••••••" required minlength="8">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Sign In <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>Don't have an account? <a href="#" id="toRegister">Create account</a></p>
+          </div>
+        </div>
+
+        <!-- Register Card -->
+        <div id="registerFormContainer" style="display: none;">
+          <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Join StudyStack and jumpstart your career</p>
+          </div>
+          <form id="registerForm" class="auth-form">
+            <div class="form-group">
+              <label for="regName">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="regName" placeholder="John Doe" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="regEmail" placeholder="you@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Password (Min 8 chars)</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="regPassword" placeholder="••••••••" required minlength="8">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Your Role</label>
+              <div class="role-selection">
+                <label class="role-card selected">
+                  <input type="radio" name="regRole" value="student" checked>
+                  <i class="fa-solid fa-user-graduate"></i>
+                  <span>Student</span>
+                </label>
+                <label class="role-card">
+                  <input type="radio" name="regRole" value="instructor">
+                  <i class="fa-solid fa-chalkboard-user"></i>
+                  <span>Instructor</span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Register <i class="fa-solid fa-user-plus"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>Already have an account? <a href="#" id="toLogin">Sign In</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboardSection" class="dashboard-section" style="display: none;">
+      <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar-nav">
+          <ul class="nav-links">
+            <li>
+              <a href="#" class="nav-link active" data-tab="courses">
+                <i class="fa-solid fa-book-open"></i> Courses
+              </a>
+            </li>
+            <li class="instructor-only" style="display: none;">
+              <a href="#" class="nav-link" data-tab="users">
+                <i class="fa-solid fa-users-gear"></i> Manage Users
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+          
+          <!-- COURSES TAB -->
+          <div id="coursesTab" class="tab-pane active">
+            <div class="workspace-header">
+              <div>
+                <h1>Courses</h1>
+                <p>Browse through high-quality course tracks or manage your catalog.</p>
+              </div>
+              <button id="addCourseBtn" class="btn btn-primary instructor-only" style="display: none;">
+                <i class="fa-solid fa-plus"></i> Add Course
+              </button>
+            </div>
+
+            <!-- Search / Filter Bar -->
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input type="text" id="courseSearch" placeholder="Search courses by title or instructor...">
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="coursesLoading" class="loading-state">
+              <div class="spinner"></div>
+              <p>Fetching courses...</p>
+            </div>
+
+            <!-- Courses Grid -->
+            <div id="coursesGrid" class="courses-grid"></div>
+
+            <!-- Empty State -->
+            <div id="coursesEmpty" class="empty-state" style="display: none;">
+              <i class="fa-solid fa-book-open-reader"></i>
+              <h3>No courses found</h3>
+              <p>Try searching for something else or add a new course.</p>
+            </div>
+          </div>
+
+          <!-- USERS TAB -->
+          <div id="usersTab" class="tab-pane" style="display: none;">
+            <div class="workspace-header">
+              <div>
+                <h1>Manage Users</h1>
+                <p>Register new users or update details of registered platform members.</p>
+              </div>
+              <button id="addUserBtn" class="btn btn-primary">
+                <i class="fa-solid fa-user-plus"></i> Create User
+              </button>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="usersLoading" class="loading-state" style="display: none;">
+              <div class="spinner"></div>
+              <p>Fetching users...</p>
+            </div>
+
+            <!-- Users Grid / Table -->
+            <div class="users-table-container">
+              <table class="users-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="usersEmpty" class="empty-state" style="display: none;">
+              <i class="fa-solid fa-users-slash"></i>
+              <h3>No users found</h3>
+              <p>Register new platform members using the button above.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- COURSE MODAL -->
+  <div id="courseModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="courseModalTitle">Add Course</h3>
+        <button class="modal-close" id="closeCourseModalBtn">&times;</button>
+      </div>
+      <form id="courseForm">
+        <input type="hidden" id="courseId">
+        <div class="form-group">
+          <label for="courseTitle">Course Title</label>
+          <input type="text" id="courseTitle" placeholder="e.g. Full Stack Web Development" required>
+        </div>
+        <div class="form-group">
+          <label for="coursePrice">Price ($)</label>
+          <input type="number" id="coursePrice" placeholder="e.g. 99" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="courseInstructor">Instructor Name</label>
+          <input type="text" id="courseInstructor" placeholder="e.g. Dr. Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label>Course Background Image</label>
+          <div class="file-upload-container">
+            <input type="file" id="courseImageFile" accept="image/*">
+            <div class="file-upload-or">OR</div>
+            <input type="text" id="courseImage" placeholder="Enter image URL directly...">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelCourseBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveCourseBtn">Save Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- USER MODAL -->
+  <div id="userModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="userModalTitle">Create User</h3>
+        <button class="modal-close" id="closeUserModalBtn">&times;</button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userId">
+        <div class="form-group">
+          <label for="userNameInput">Full Name</label>
+          <input type="text" id="userNameInput" placeholder="Jane Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="userEmailInput">Email Address</label>
+          <input type="email" id="userEmailInput" placeholder="jane@example.com" required>
+        </div>
+        <div class="form-group" id="userPasswordGroup">
+          <label for="userPasswordInput">Password (Min 8 chars)</label>
+          <input type="password" id="userPasswordInput" placeholder="••••••••" required minlength="8">
+        </div>
+        <div class="form-group">
+          <label for="userRoleInput">Platform Role</label>
+          <select id="userRoleInput" class="form-select">
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelUserBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveUserBtn">Save User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="js/app.js"></script>
+</body>
+</html>
